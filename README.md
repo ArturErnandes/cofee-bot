@@ -20,7 +20,7 @@ The proposed system consists of four core components operating as an integrated 
 ### 1) Hardware/Network Architecture (KTS)
 This diagram provides a high-level view of the physical components and their connectivity.
 
-![Hardware/Network Architecture (KTS)](readme_imgs/КТС.jpg)
+![Hardware/Network Architecture (KTS)](readme_imgs/KTS.jpg)
 
 ---
 
