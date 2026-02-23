@@ -68,6 +68,7 @@ This diagram captures the key entities and relationships: the camera streams vid
 - A camera capable of providing a stable video stream (IP/USB)
 - A server capable of real-time video processing and gesture recognition
 - A controllable coffee machine interface (API/controller)
+
 - A controllable robot interface (API/controller)
 
 ---
