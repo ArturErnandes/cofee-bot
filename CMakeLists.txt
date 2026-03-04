@@ -7,6 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(engine_controll
-    engine_controll.cpp
-    classes.h
+    src/engine_controll.cpp
+    src/classes.h
 )
