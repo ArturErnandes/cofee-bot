@@ -17,21 +17,21 @@ The proposed system consists of four core components operating as an integrated 
 
 ## Implementation
 
-### 1) Hardware/Network Architecture (KTS)
+### 1) Комплекс технических систем
 This diagram provides a high-level view of the physical components and their connectivity.
 
 ![Hardware/Network Architecture (KTS)](readme_imgs/KTS.jpg)
 
 ---
 
-### 2) Use-Case Diagram (Component Responsibilities)
+### 2) Use-Case диаграмма
 This diagram outlines the supported functions for each component: Camera / Server / Coffee Machine / Robot.
 
 ![Use-Case Diagram](readme_imgs/use-case-schema.png)
 
 ---
 
-### 3) Sequence Diagram (End-to-End Workflow)
+### 3) Диграмма последовательностьей прецендентов
 The following steps represent the nominal operational workflow:
 
 1. Camera → Server: stream video  
@@ -49,26 +49,20 @@ The following steps represent the nominal operational workflow:
 
 ---
 
-### 4) Conceptual Model (UML Class Diagram)
+### 4) Концептуальная модель
 This diagram captures the key entities and relationships: the camera streams video to the server; the server issues control commands to the robot and the coffee machine.
 
 ![Conceptual Model](readme_imgs/concept-model.png)
 
 ---
 
-## System Components (Summary)
+_## System Components (Summary)
 - **Camera**: record video; stream video to the server  
 - **Server**: gesture recognition; coffee-machine signaling; route planning; robot start/return commands; arrival tracking  
 - **Coffee Machine**: pour coffee  
-- **Robot**: move forward/backward; turn right/left  
+- **Robot**: move forward/backward; turn right/left_
 
----
+## Диаграмма Классов
 
-## Minimum Requirements
-- A camera capable of providing a stable video stream (IP/USB)
-- A server capable of real-time video processing and gesture recognition
-- A controllable coffee machine interface (API/controller)
-
-- A controllable robot interface (API/controller)
-
+![Class Diagram](readme_imgs/uml.png)
 ---
