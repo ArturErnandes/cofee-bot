@@ -1,11 +1,9 @@
 # Gesture-Based Coffee Delivery System
 
-## Problem Statement
+## Постановка проблемы
 In a coworking environment, users may need a fast and frictionless way to request coffee without interacting with a mobile application, a terminal, or approaching the coffee machine. The solution must support a hands-free request method (via a predefined gesture), automatically initiate coffee preparation, dispatch a delivery robot to the user, and return the robot to its base after completion.
 
----
-
-## Proposed Solution
+## Решенме
 The proposed system consists of four core components operating as an integrated pipeline:
 
 1. **Camera** — captures and streams video to the server  
@@ -13,29 +11,18 @@ The proposed system consists of four core components operating as an integrated 
 3. **Coffee Machine** — prepares/pours coffee upon receiving a server signal  
 4. **Robot** — executes delivery and return actions according to the server commands
 
----
 
-## Implementation
-
-### 1) Комплекс технических систем
+### Комплекс технических систем
 This diagram provides a high-level view of the physical components and their connectivity.
 
-<p style="text-align: center;">
-  <img src="readme_imgs/KTS.jpg" alt="Hardware/Network Architecture (KTS)">
-</p>
+<img src="readme_imgs/KTS.jpg" alt="Hardware/Network Architecture (KTS)">
 
----
-
-### 2) Use-Case диаграмма
+### Use-Case диаграмма
 This diagram outlines the supported functions for each component: Camera / Server / Coffee Machine / Robot.
 
-<p style="text-align: center;">
-  <img src="readme_imgs/use-case-schema.png" alt="Use-Case Diagram">
-</p>
+<img src="readme_imgs/use-case-schema.png" alt="Use-Case Diagram">
 
----
-
-### 3) Диграмма последовательностьей прецендентов
+### Диграмма последовательностьей прецендентов
 The following steps represent the nominal operational workflow:
 
 1. Camera → Server: stream video  
@@ -49,30 +36,13 @@ The following steps represent the nominal operational workflow:
 9. Server → Robot: send a “start return” command  
 10. Robot: perform motion actions (move/turn)
 
-<p style="text-align: center;">
-  <img src="readme_imgs/sequence-schema.png" alt="Sequence Diagram">
-</p>
+<img src="readme_imgs/sequence-schema.png" alt="Sequence Diagram">
 
----
-
-### 4) Концептуальная модель
+### Концептуальная модель
 This diagram captures the key entities and relationships: the camera streams video to the server; the server issues control commands to the robot and the coffee machine.
 
-<p style="text-align: center;">
-  <img src="readme_imgs/concept-model.png" alt="Conceptual Model">
-</p>
+<img src="readme_imgs/concept-model.png" alt="Conceptual Model">
 
----
+### Диаграмма Классов
 
-_## System Components (Summary)
-- **Camera**: record video; stream video to the server  
-- **Server**: gesture recognition; coffee-machine signaling; route planning; robot start/return commands; arrival tracking  
-- **Coffee Machine**: pour coffee  
-- **Robot**: move forward/backward; turn right/left_
-
-## Диаграмма Классов
-
-<p style="text-align: center;">
-  <img src="readme_imgs/uml.png" alt="Class Diagram">
-</p>
----
+<img src="readme_imgs/uml.png" alt="Class Diagram">
