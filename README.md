@@ -20,14 +20,18 @@ The proposed system consists of four core components operating as an integrated 
 ### 1) Комплекс технических систем
 This diagram provides a high-level view of the physical components and their connectivity.
 
-![Hardware/Network Architecture (KTS)](readme_imgs/KTS.jpg)
+<p style="text-align: center;">
+  <img src="readme_imgs/KTS.jpg" alt="Hardware/Network Architecture (KTS)">
+</p>
 
 ---
 
 ### 2) Use-Case диаграмма
 This diagram outlines the supported functions for each component: Camera / Server / Coffee Machine / Robot.
 
-![Use-Case Diagram](readme_imgs/use-case-schema.png)
+<p style="text-align: center;">
+  <img src="readme_imgs/use-case-schema.png" alt="Use-Case Diagram">
+</p>
 
 ---
 
@@ -45,14 +49,18 @@ The following steps represent the nominal operational workflow:
 9. Server → Robot: send a “start return” command  
 10. Robot: perform motion actions (move/turn)
 
-![Sequence Diagram](readme_imgs/sequence-schema.png)
+<p style="text-align: center;">
+  <img src="readme_imgs/sequence-schema.png" alt="Sequence Diagram">
+</p>
 
 ---
 
 ### 4) Концептуальная модель
 This diagram captures the key entities and relationships: the camera streams video to the server; the server issues control commands to the robot and the coffee machine.
 
-![Conceptual Model](readme_imgs/concept-model.png)
+<p style="text-align: center;">
+  <img src="readme_imgs/concept-model.png" alt="Conceptual Model">
+</p>
 
 ---
 
@@ -64,5 +72,7 @@ _## System Components (Summary)
 
 ## Диаграмма Классов
 
-![Class Diagram](readme_imgs/uml.png)
+<p style="text-align: center;">
+  <img src="readme_imgs/uml.png" alt="Class Diagram">
+</p>
 ---
