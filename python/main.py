@@ -1,7 +1,7 @@
 import cv2
 
 from camera_classes import ColorsDetector, ObjectsDetector, Visualizer
-from config import camera, colors, kernel, min_area, filter_iterations
+from config import camera, colors, kernel, min_area, filter_iterations, text_color, border_color, thickness
 from logger import get_logger
 
 
@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 
 color_recognizer = ColorsDetector(colors)
 object_detector = ObjectsDetector(kernel, min_area, filter_iterations)
-visualizer = Visualizer()
+visualizer = Visualizer(text_color, border_color, thickness)
 
 capture = cv2.VideoCapture(camera)
 
@@ -20,8 +20,8 @@ while True:
         break
 
     masks = color_recognizer.create_masks(frame)
-    detections = object_detector.detect(masks)
-    processed_frame = visualizer.draw(frame, detections)
+    detected_objects = object_detector.detect(masks)
+    processed_frame = visualizer.visualize(frame, detected_objects)
 
     cv2.imshow("frames", processed_frame)
 
