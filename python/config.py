@@ -33,4 +33,7 @@ color_ranges = [
     },
 ]
 
+kernel = np.ones((5, 5), np.uint8)
+min_area = 500
+
 colors = fill_colors(color_ranges)
