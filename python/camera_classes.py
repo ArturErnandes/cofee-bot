@@ -27,7 +27,7 @@ class DetectedObject:
     area: float
 
 
-class ColorsRecognizer:
+class ColorsDetector:
     def __init__(self, colors: list[Color]):
         self.colors = colors
 
@@ -55,14 +55,15 @@ class ColorsRecognizer:
         return masks
 
 
-class ObjectsRecognizer:
-    def __init__(self, kernel, min_area):
+class ObjectsDetector:
+    def __init__(self, kernel, min_area, filter_iterations):
         self.kernel = kernel
         self.min_area = min_area
+        self.filter_iterations = filter_iterations
 
     def filter_mask(self, color_mask: ColorMask):
-        filtered_mask = cv2.erode(color_mask.mask, self.kernel, iterations=1)
-        filtered_mask = cv2.dilate(filtered_mask, self.kernel, iterations=1)
+        filtered_mask = cv2.erode(color_mask.mask, self.kernel, self.filter_iterations)
+        filtered_mask = cv2.dilate(filtered_mask, self.kernel, self.filter_iterations)
         return ColorMask(
             name=color_mask.name,
             mask=filtered_mask,
@@ -90,51 +91,18 @@ class ObjectsRecognizer:
             detected_objects.append(detected_object)
         return detected_objects
 
+    def proceed_objects(self, color_masks: list[ColorMask]):
+        detected_objects = []
+
+        for color_mask in color_masks:
+            filtered_mask = self.filter_mask(color_mask)
+            objects = self.detect_objects(filtered_mask)
+            detected_objects.extend(objects)
+        return detected_objects
+
 
 
 '''
-class ObjectDetector:
-    def __init__(self, min_contour_area=500, kernel_size=(5, 5)):
-        self.min_contour_area = min_contour_area
-        self.kernel = cv2.getStructuringElement(cv2.MORPH_RECT, kernel_size)
-
-    def clean_mask(self, mask):
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, self.kernel, iterations=1)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, self.kernel, iterations=2)
-        return mask
-
-    @staticmethod
-    def find_contours(mask):
-        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        return contours
-
-    def detect(self, masks):
-        detections = []
-
-        for item in masks:
-            cleaned_mask = self.clean_mask(item["mask"])
-            contours = self.find_contours(cleaned_mask)
-
-            for contour in contours:
-                area = cv2.contourArea(contour)
-                if area < self.min_contour_area:
-                    continue
-
-                x, y, w, h = cv2.boundingRect(contour)
-                detections.append(
-                    {
-                        "label": item["label"],
-                        "x": x,
-                        "y": y,
-                        "w": w,
-                        "h": h,
-                        "area": area,
-                    }
-                )
-
-        return detections
-
-
 class Visualizer:
     def __init__(self, rectangle_color=(0, 0, 0), text_color=(0, 0, 0), thickness=2):
         self.rectangle_color = rectangle_color
