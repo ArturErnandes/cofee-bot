@@ -1,6 +1,5 @@
 import numpy as np
-from camera_classes import Color
-
+from classes import Color, ObjectsConfig, VisualizerConfig
 
 def fill_colors(colors_dict):
     colors_list = []
@@ -16,7 +15,7 @@ def fill_colors(colors_dict):
     return colors_list
 
 
-camera = 0
+camera = "../../videos/class.MOV"
 
 color_ranges = [
     {
@@ -41,5 +40,16 @@ text_color = (0, 0, 0)
 border_color = (0, 0, 0)
 thickness = 2
 
+objects_config = ObjectsConfig(
+    kernel=kernel,
+    min_area=min_area,
+    filter_iterations=filter_iterations,
+)
+
+visualizer_config = VisualizerConfig(
+    text_color=text_color,
+    border_color=border_color,
+    thickness=thickness,
+)
 
 colors = fill_colors(color_ranges)
