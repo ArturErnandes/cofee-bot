@@ -1,15 +1,24 @@
 import cv2
 
 from camera_classes import ColorsDetector, ObjectsDetector, Visualizer
-from config import camera, colors, kernel, min_area, filter_iterations, text_color, border_color, thickness
+from config import camera, objects_config, visualizer_config, colors
 from logger import get_logger
 
 
 logger = get_logger(__name__)
 
 color_recognizer = ColorsDetector(colors)
-object_detector = ObjectsDetector(kernel, min_area, filter_iterations)
-visualizer = Visualizer(text_color, border_color, thickness)
+
+object_detector = ObjectsDetector(
+    objects_config.kernel,
+    objects_config.min_area,
+    objects_config.filter_iterations,
+)
+
+visualizer = Visualizer(
+    visualizer_config.text_color,
+    visualizer_config.border_color,
+    visualizer_config.thickness)
 
 capture = cv2.VideoCapture(camera)
 
