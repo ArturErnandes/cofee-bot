@@ -16,18 +16,18 @@ def fill_colors(colors_dict):
     return colors_list
 
 
-camera = '../../videos/coridor.MOV'
+camera = 0
 
 color_ranges = [
     {
         #red
-        "title": "front-section",
+        "name": "front-section",
         "lower": np.array([145, 120, 120], dtype=np.uint8),
         "upper": np.array([175, 255, 255], dtype=np.uint8),
     },
     {
         #blue
-        "title": "back-section",
+        "name": "back-section",
         "lower": np.array([95, 120, 120], dtype=np.uint8),
         "upper": np.array([115, 255, 255], dtype=np.uint8),
     },
@@ -36,5 +36,10 @@ color_ranges = [
 kernel = np.ones((5, 5), np.uint8)
 min_area = 500
 filter_iterations = 1
+
+text_color = (0, 0, 0)
+border_color = (0, 0, 0)
+thickness = 2
+
 
 colors = fill_colors(color_ranges)
