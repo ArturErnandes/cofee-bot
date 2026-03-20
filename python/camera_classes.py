@@ -36,7 +36,7 @@ class ColorsDetector:
         return cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     @staticmethod
-    def create_color_mask(hsv_frame, color):
+    def create_color_mask(hsv_frame, color: Color):
         mask = cv2.inRange(hsv_frame, color.lower_value, color.upper_value)
         return mask
 
@@ -52,6 +52,7 @@ class ColorsDetector:
                     mask=mask
                 )
             )
+
         return masks
 
 
@@ -62,8 +63,8 @@ class ObjectsDetector:
         self.filter_iterations = filter_iterations
 
     def filter_mask(self, color_mask: ColorMask):
-        filtered_mask = cv2.erode(color_mask.mask, self.kernel, self.filter_iterations)
-        filtered_mask = cv2.dilate(filtered_mask, self.kernel, self.filter_iterations)
+        filtered_mask = cv2.erode(color_mask.mask, self.kernel, iterations=self.filter_iterations)
+        filtered_mask = cv2.dilate(filtered_mask, self.kernel, iterations=self.filter_iterations)
         return ColorMask(
             name=color_mask.name,
             mask=filtered_mask,
@@ -91,48 +92,49 @@ class ObjectsDetector:
             detected_objects.append(detected_object)
         return detected_objects
 
-    def proceed_objects(self, color_masks: list[ColorMask]):
+    def detect(self, color_masks: list[ColorMask]):
         detected_objects = []
 
         for color_mask in color_masks:
             filtered_mask = self.filter_mask(color_mask)
             objects = self.detect_objects(filtered_mask)
             detected_objects.extend(objects)
+
         return detected_objects
 
 
-
-'''
 class Visualizer:
-    def __init__(self, rectangle_color=(0, 0, 0), text_color=(0, 0, 0), thickness=2):
-        self.rectangle_color = rectangle_color
+    def __init__(self, text_color, border_color, thickness):
         self.text_color = text_color
+        self.border_color = border_color
         self.thickness = thickness
 
-    def draw(self, frame, detections):
+    def draw(self, frame, detected_object: DetectedObject):
+        cv2.rectangle(
+            frame,
+            (detected_object.x_coord, detected_object.y_coord),
+            (
+                detected_object.x_coord + detected_object.width,
+                detected_object.y_coord + detected_object.height,
+            ),
+            self.border_color,
+            self.thickness,
+        )
+
+        cv2.putText(
+            frame,
+            detected_object.name,
+            (detected_object.x_coord, max(detected_object.y_coord - 10, 20)),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            self.text_color,
+            self.thickness,
+        )
+
+    def visualize(self, frame, detected_objects: list[DetectedObject]):
         output = frame.copy()
 
-        for detection in detections:
-            x = detection["x"]
-            y = detection["y"]
-            w = detection["w"]
-            h = detection["h"]
+        for detected_object in detected_objects:
+            self.draw(output, detected_object)
 
-            cv2.rectangle(
-                output,
-                (x, y),
-                (x + w, y + h),
-                self.rectangle_color,
-                self.thickness,
-            )
-            cv2.putText(
-                output,
-                detection["label"],
-                (x, max(y - 10, 20)),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
-                self.text_color,
-                self.thickness,
-            )
-
-        return output'''
+        return output
