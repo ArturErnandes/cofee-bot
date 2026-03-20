@@ -35,5 +35,6 @@ color_ranges = [
 
 kernel = np.ones((5, 5), np.uint8)
 min_area = 500
+filter_iterations = 1
 
 colors = fill_colors(color_ranges)
