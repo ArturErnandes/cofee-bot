@@ -1,30 +1,6 @@
-from dataclasses import dataclass
 import cv2
-import numpy as np
-from numpy.typing import NDArray
 
-
-@dataclass
-class Color:
-    name: str
-    lower_value: NDArray[np.uint8]
-    upper_value: NDArray[np.uint8]
-
-
-@dataclass
-class ColorMask:
-    name: str
-    mask: NDArray[np.uint8]
-
-
-@dataclass
-class DetectedObject:
-    name: str
-    x_coord: int
-    y_coord: int
-    width: int
-    height: int
-    area: float
+from classes import Color, ColorMask, DetectedObject
 
 
 class ColorsDetector:
