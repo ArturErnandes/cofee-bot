@@ -15,21 +15,26 @@ def fill_colors(colors_dict):
     return colors_list
 
 
-camera = "../../videos/class.MOV"
+camera = "../../videos/coridor.MOV"
 
 color_ranges = [
     {
-        #red
+        #красный
         "name": "front-section",
         "lower": np.array([145, 120, 120], dtype=np.uint8),
         "upper": np.array([175, 255, 255], dtype=np.uint8),
     },
     {
-        #blue
+        #синий
         "name": "back-section",
         "lower": np.array([95, 120, 120], dtype=np.uint8),
         "upper": np.array([115, 255, 255], dtype=np.uint8),
     },
+    {
+        "name": "target",
+        "lower": np.array([20, 150, 150], dtype=np.uint8),
+        "upper": np.array([35, 255, 255], dtype=np.uint8),
+    }
 ]
 
 kernel = np.ones((5, 5), np.uint8)
