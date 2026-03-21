@@ -27,8 +27,8 @@ color_ranges = [
     {
         #синий
         "name": "back-section",
-        "lower": np.array([95, 120, 120], dtype=np.uint8),
-        "upper": np.array([115, 255, 255], dtype=np.uint8),
+        "lower": np.array([98, 170, 170], dtype=np.uint8),
+        "upper": np.array([108, 255, 255], dtype=np.uint8),
     },
     {
         "name": "target",
