@@ -27,6 +27,12 @@ class DetectedObject:
 
 
 @dataclass
+class Center:
+    x_coord: float
+    y_coord: float
+
+
+@dataclass
 class ObjectsConfig:
     kernel: NDArray[np.uint8]
     min_area: int
