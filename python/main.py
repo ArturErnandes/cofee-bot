@@ -1,6 +1,6 @@
 import cv2
 
-from camera_classes import ColorsDetector, ObjectsDetector, Visualizer
+from detectors import ColorsDetector, ObjectsDetector, Visualizer
 from config import camera, objects_config, visualizer_config, colors
 from logger import get_logger
 
