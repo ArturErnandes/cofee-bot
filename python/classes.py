@@ -33,6 +33,14 @@ class Center:
 
 
 @dataclass
+class DetectedGeometry:
+    front_center: Center | None
+    back_center: Center | None
+    robot_center: Center | None
+    target_center: Center | None
+
+
+@dataclass
 class ObjectsConfig:
     kernel: NDArray[np.uint8]
     min_area: int
