@@ -15,7 +15,7 @@ def fill_colors(colors_dict):
     return colors_list
 
 
-camera = "../../videos/coridor.MOV"
+camera = "../../videos/class.MOV"
 
 color_ranges = [
     {
@@ -36,6 +36,8 @@ color_ranges = [
         "upper": np.array([35, 255, 255], dtype=np.uint8),
     }
 ]
+
+robot_size = 10
 
 kernel = np.ones((5, 5), np.uint8)
 min_area = 500
