@@ -15,7 +15,7 @@ def fill_colors(colors_dict):
     return colors_list
 
 
-camera = "../../videos/class.MOV"
+camera = 0
 
 color_ranges = [
     {
