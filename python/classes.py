@@ -31,6 +31,11 @@ class Center:
     x_coord: float
     y_coord: float
 
+@dataclass
+class Vector:
+    x: float
+    y: float
+
 
 @dataclass
 class DetectedGeometry:
@@ -38,6 +43,14 @@ class DetectedGeometry:
     back_center: Center | None
     robot_center: Center | None
     target_center: Center | None
+
+
+@dataclass
+class NavigationData:
+    robot_vector: Vector
+    target_vector: Vector
+    distance_to_target: float
+    target_angle: float
 
 
 @dataclass
