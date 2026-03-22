@@ -1,7 +1,7 @@
 import cv2
 
-from detectors import ColorsDetector, ObjectsDetector, Visualizer
-from config import camera, objects_config, visualizer_config, colors
+from detectors import ColorsDetector, ObjectsDetector, ObjectsGeometry, Navigator, Visualizer
+from config import camera, objects_config, visualizer_config, colors, robot_size
 from logger import get_logger
 
 
@@ -14,6 +14,9 @@ object_detector = ObjectsDetector(
     objects_config.min_area,
     objects_config.filter_iterations,
 )
+
+objects_geometry = ObjectsGeometry()
+navigator = Navigator(robot_size)
 
 visualizer = Visualizer(
     visualizer_config.text_color,
@@ -30,7 +33,15 @@ while True:
 
     masks = color_recognizer.create_masks(frame)
     detected_objects = object_detector.detect(masks)
-    processed_frame = visualizer.visualize(frame, detected_objects)
+    detected_geometry = objects_geometry.build_geometry(detected_objects)
+    navigation_data = navigator.build_navigation(detected_geometry)
+
+    processed_frame = visualizer.visualize(
+        frame,
+        detected_objects,
+        detected_geometry,
+        navigation_data,
+    )
 
     cv2.imshow("frames", processed_frame)
 
