@@ -1,9 +1,9 @@
 # Gesture-Based Coffee Delivery System
 
-## Постановка проблемы
+## Problem
 In a coworking environment, users may need a fast and frictionless way to request coffee without interacting with a mobile application, a terminal, or approaching the coffee machine. The solution must support a hands-free request method (via a predefined gesture), automatically initiate coffee preparation, dispatch a delivery robot to the user, and return the robot to its base after completion.
 
-## Решение
+## Solution
 The proposed system consists of four core components operating as an integrated pipeline:
 
 1. **Camera** — captures and streams video to the server  
@@ -12,17 +12,17 @@ The proposed system consists of four core components operating as an integrated 
 4. **Robot** — executes delivery and return actions according to the server commands
 
 
-## Комплекс технических систем
+## Technical systems complex
 This diagram provides a high-level view of the physical components and their connectivity.
 
 <img src="readme_imgs/KTS.jpg" alt="Hardware/Network Architecture (KTS)">
 
-## Use-Case диаграмма
+## Use-Case diagram
 This diagram outlines the supported functions for each component: Camera / Server / Coffee Machine / Robot.
 
 <img src="readme_imgs/use-case-schema.png" alt="Use-Case Diagram">
 
-## Диграмма последовательностей прецендентов
+## Diagram of precedent sequences
 The following steps represent the nominal operational workflow:
 
 1. Camera → Server: stream video  
@@ -38,11 +38,11 @@ The following steps represent the nominal operational workflow:
 
 <img src="readme_imgs/sequence-schema.png" alt="Sequence Diagram">
 
-## Концептуальная модель
+## Conceptual model
 This diagram captures the key entities and relationships: the camera streams video to the server; the server issues control commands to the robot and the coffee machine.
 
 <img src="readme_imgs/concept-model.png" alt="Conceptual Model">
 
-## Диаграмма Классов
+## Class Diagram
 
 <img src="readme_imgs/uml.png" alt="Class Diagram">
