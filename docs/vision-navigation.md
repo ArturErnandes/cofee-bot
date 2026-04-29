@@ -2,10 +2,10 @@
 
 Техническая спецификация Python-пайплайна обработки кадра и расчёта навигационных метрик.
 
-- Entry point: `python/main.py`
-- Core implementation: `python/detectors.py`
-- Runtime config: `python/config.py`
-- Data contracts: `python/classes.py`
+- Entry point: `vision/main.py`
+- Core implementation: `vision/detectors/`
+- Runtime config: `vision/config.py`
+- Data contracts: `vision/models.py`
 
 ---
 
@@ -21,7 +21,7 @@
 
 ---
 
-## 2. Контракт конфигурации (`python/config.py`)
+## 2. Контракт конфигурации (`vision/config.py`)
 
 ### 2.1 Цветовые диапазоны
 
@@ -108,9 +108,3 @@
 | нулевая длина вектора | потенциальное деление на ноль в расчёте угла/масштаба (сейчас без явной защиты) |
 
 ---
-
-## 7. Практические замечания по качеству
-
-1. HSV-пороги зависят от освещения и камеры, требуют калибровки под место установки.
-2. `min_area` определяет баланс шумоустойчивости и чувствительности.
-3. Для стабильной метрики в см необходима фиксированная высота камеры и физическая валидация `robot_size`.

@@ -1,8 +1,8 @@
 import cv2
 
-from detectors import ColorsDetector, ObjectsDetector, ObjectsGeometry, Navigator, Visualizer
-from config import camera, objects_config, visualizer_config, colors, robot_size
-from logger import get_logger
+from vision.detectors import ColorsDetector, ObjectsDetector, ObjectsGeometry, Navigator, Visualizer
+from vision.config import camera, objects_config, visualizer_config, colors, robot_size
+from vision.logger import get_logger
 
 
 logger = get_logger(__name__)
