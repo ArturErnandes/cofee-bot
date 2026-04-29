@@ -7,6 +7,8 @@
 - Router: `api/routes/routes.py`
 - Модель данных: `api/schemas/models.py` (`Command`)
 - Run entrypoint: `api/run.py`
+- Локальный запуск: `python -m api.run`
+- В Docker Compose: сервис `api` (`docker compose up -d api`)
 
 ---
 

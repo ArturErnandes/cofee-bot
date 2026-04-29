@@ -1,6 +1,8 @@
 # Runbook
 
-Документ описывает практический запуск и проверку `cofee-bot` в текущем состоянии репозитория.
+Документ описывает запуск и проверку `cofee-bot` в двух режимах:
+- локально (модули по отдельности),
+- через Docker Compose (skeleton из 3 контейнеров).
 
 ---
 
@@ -23,7 +25,7 @@
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install opencv-python fastapi uvicorn numpy pydantic
+pip install -r requirements.txt
 ```
 
 Проверка импортов:
@@ -100,5 +102,61 @@ cmake --build build
 - `left 700`
 
 Поведение: `FooEngine` печатает действие, ждёт `time_ms`, затем печатает `stop`.
+
+---
+
+## 6. Запуск через Docker Compose (skeleton)
+
+Из корня репозитория:
+
+```bash
+docker compose up --build -d
+```
+
+Проверка контейнеров:
+
+```bash
+docker compose ps
+```
+
+Логи:
+
+```bash
+docker compose logs -f api
+docker compose logs -f vision
+docker compose logs -f control
+```
+
+Остановка:
+
+```bash
+docker compose down
+```
+
+### 6.1 Что сейчас делает compose
+
+1. Поднимает три контейнера: `vision`, `api`, `control`.
+2. Не реализует передачу команд между модулями (это следующий этап).
+3. Готовит конфигурационный каркас для будущей интеграции.
+
+### 6.2 Конфигурация vision через env
+
+`vision/config.py` хранит дефолты, которые можно переопределять:
+
+- `VISION_CAMERA_INDEX`
+- `VISION_ROBOT_SIZE_CM`
+- `VISION_MIN_AREA`
+- `VISION_FILTER_ITERATIONS`
+
+Пример:
+
+```bash
+VISION_CAMERA_INDEX=1 VISION_MIN_AREA=700 docker compose up --build -d
+```
+
+### 6.3 Камера в контейнере
+
+На Linux для USB/встроенной камеры обычно нужен проброс `device` (`/dev/video0` и т.д.).
+На macOS/Windows при Docker Desktop прямой доступ контейнера к камере часто ограничен.
 
 ---
