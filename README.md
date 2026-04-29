@@ -11,7 +11,7 @@
 
 | Компонент | Реализация | Назначение |
 |---|---|---|
-| Vision + Navigation | `vision/main.py`, `vision/detectors.py` | CV-пайплайн по кадрам камеры и расчёт навигационных параметров |
+| Vision + Navigation | `vision/main.py`, `vision/detectors/` | CV-пайплайн по кадрам камеры и расчёт навигационных параметров |
 | API endpoint для команд | `api/server.py` | HTTP-вход для передачи команды (в текущем виде без очереди/диспетчера) |
 | Engine control prototype | `control/classes.h`, `control/engine_controll.cpp` | Симуляция реакции движка на текстовые команды |
 | Конфигурация CV | `vision/config.py` | HSV-диапазоны, фильтрация масок, параметры визуализации |

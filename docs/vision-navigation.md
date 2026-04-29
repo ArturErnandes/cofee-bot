@@ -3,7 +3,7 @@
 Техническая спецификация Python-пайплайна обработки кадра и расчёта навигационных метрик.
 
 - Entry point: `vision/main.py`
-- Core implementation: `vision/detectors.py`
+- Core implementation: `vision/detectors/`
 - Runtime config: `vision/config.py`
 - Data contracts: `vision/models.py`
 
