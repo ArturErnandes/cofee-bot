@@ -64,7 +64,14 @@ cmake --build build
 ./build/engine_controll
 ```
 
-### 4.2 Альтернативная сборка
+### 4.2 Запуск через Docker Compose
+
+```bash
+docker compose up --build -d control
+docker compose logs -f control
+```
+
+### 4.3 Альтернативная сборка
 
 ```bash
 cd control

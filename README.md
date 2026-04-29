@@ -16,9 +16,18 @@
 | Engine control prototype | `control/classes.h`, `control/engine_controll.cpp` | Симуляция реакции движка на текстовые команды |
 | Конфигурация CV | `vision/config.py` | HSV-диапазоны, фильтрация масок, параметры визуализации |
 
-## Быстрый запуск
+## Запуск проекта
 
-### Python vision loop
+Проект поддерживает два режима:
+
+1. Локальный запуск модулей по отдельности (удобно для отладки).
+2. Запуск каркаса через Docker Compose (`vision`, `api`, `control`).
+
+---
+
+### Локальный запуск
+
+#### Vision (Python)
 
 ```bash
 python3 -m venv .venv
@@ -38,7 +47,7 @@ python -m api.run
 
 URL: `http://localhost:8080/docs`.
 
-### C++ control prototype
+#### Control (C++)
 
 Можно запускать как через CMake, так и через прямую сборку:
 
@@ -56,6 +65,49 @@ cd control
 g++ -std=c++11 engine_controll.cpp -o engine_controll
 ./engine_controll
 ```
+
+---
+
+### Docker Compose (skeleton: 3 контейнера)
+
+```bash
+docker compose up --build -d
+```
+
+Состав:
+- `vision` — CV модуль (OpenCV + камера)
+- `api` — FastAPI endpoint
+- `control` — C++ control prototype
+
+Проверка статуса:
+
+```bash
+docker compose ps
+```
+
+Остановка:
+
+```bash
+docker compose down
+```
+
+Логи:
+
+```bash
+docker compose logs -f api
+docker compose logs -f vision
+docker compose logs -f control
+```
+
+Важно:
+- текущий compose — каркас без интеграции модулей между собой;
+- для `vision` доступны env-overrides:
+  - `VISION_CAMERA_INDEX`
+  - `VISION_ROBOT_SIZE_CM`
+  - `VISION_MIN_AREA`
+  - `VISION_FILTER_ITERATIONS`
+- на Linux для реальной камеры обычно нужно пробрасывать `device` (`/dev/video*`);
+- на macOS/Windows Docker Desktop прямой доступ к хостовой камере обычно ограничен.
 
 ## Диаграммы
 
@@ -96,6 +148,7 @@ g++ -std=c++11 engine_controll.cpp -o engine_controll
 - [docs/api.md](docs/api.md) — API-контракт `POST /command`
 - [docs/models.md](docs/models.md) — модели данных Python-части
 - [docs/engine-control.md](docs/engine-control.md) — C++ контур управления
+- [docs/future-tasks.md](docs/future-tasks.md) — план интеграции модулей и RabbitMQ
 
 ## Ограничения текущего состояния
 
