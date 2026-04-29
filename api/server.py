@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from classes import Command
+from models import Command
 
 
 app = FastAPI()

@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from pydantic import BaseModel
 from numpy.typing import NDArray
 import numpy as np
 
@@ -31,6 +30,7 @@ class DetectedObject:
 class Center:
     x_coord: float
     y_coord: float
+
 
 @dataclass
 class Vector:
@@ -66,8 +66,3 @@ class VisualizerConfig:
     text_color: tuple[int, int, int]
     border_color: tuple[int, int, int]
     thickness: int
-
-
-class Command(BaseModel):
-    message: str
-    time: float

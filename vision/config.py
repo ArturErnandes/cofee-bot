@@ -1,5 +1,5 @@
 import numpy as np
-from classes import Color, ObjectsConfig, VisualizerConfig
+from models import Color, ObjectsConfig, VisualizerConfig
 
 def fill_colors(colors_dict):
     colors_list = []

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-from classes import Color, ColorMask, DetectedObject, Center, Vector, DetectedGeometry, NavigationData
+from models import Color, ColorMask, DetectedObject, Center, Vector, DetectedGeometry, NavigationData
 
 
 class ColorsDetector:
