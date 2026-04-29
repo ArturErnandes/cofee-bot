@@ -1,10 +1,12 @@
 # Command API
 
-Актуальная спецификация HTTP API модуля `api/server.py`.
+Актуальная спецификация HTTP API модуля `api`.
 
 - Framework: FastAPI
-- Entry point: `api/server.py`
-- Модель данных: `api/models.py` (`Command`)
+- App factory/module: `api/app.py`
+- Router: `api/routes/routes.py`
+- Модель данных: `api/schemas/models.py` (`Command`)
+- Run entrypoint: `api/run.py`
 
 ---
 
@@ -78,27 +80,3 @@ curl -X POST "http://localhost:8080/command?command=forward&time=1.5"
 4. Нет авторизации/аутентификации.
 
 ---
-
-## 6. Ошибки валидации (FastAPI/Pydantic)
-
-Примеры:
-
-- отсутствует `command` или `time` -> `422 Unprocessable Entity`
-- `time` не приводится к `float` -> `422 Unprocessable Entity`
-
-Пример некорректного запроса:
-
-```bash
-curl -X POST "http://localhost:8080/command?command=forward&time=abc"
-```
-
----
-
-## 7. Планируемый целевой контракт (рекомендация)
-
-Для следующего этапа интеграции обычно добавляют:
-
-1. JSON body (`{"command":"forward","duration_ms":1000}`) вместо query.
-2. Явный enum команд.
-3. Асинхронную постановку в очередь и endpoint статуса (`/commands/{id}`).
-4. Связь с navigation-выходом (`distance/angle` -> команда движения).

@@ -12,7 +12,7 @@
 | Компонент | Реализация | Назначение |
 |---|---|---|
 | Vision + Navigation | `vision/main.py`, `vision/detectors/` | CV-пайплайн по кадрам камеры и расчёт навигационных параметров |
-| API endpoint для команд | `api/server.py` | HTTP-вход для передачи команды (в текущем виде без очереди/диспетчера) |
+| API endpoint для команд | `api/app.py` | HTTP-вход для передачи команды (в текущем виде без очереди/диспетчера) |
 | Engine control prototype | `control/classes.h`, `control/engine_controll.cpp` | Симуляция реакции движка на текстовые команды |
 | Конфигурация CV | `vision/config.py` | HSV-диапазоны, фильтрация масок, параметры визуализации |
 
@@ -23,7 +23,7 @@
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install opencv-python fastapi uvicorn numpy pydantic
+pip install -r requirements.txt
 python -m vision.main
 ```
 
@@ -33,7 +33,7 @@ python -m vision.main
 
 ```bash
 source .venv/bin/activate
-python -m api.server
+python -m api.run
 ```
 
 URL: `http://localhost:8080/docs`.
@@ -99,7 +99,7 @@ g++ -std=c++11 engine_controll.cpp -o engine_controll
 
 ## Ограничения текущего состояния
 
-- Интеграция между `vision/main.py`, `api/server.py` и C++ контроллером не реализована как единый runtime-контур.
+- Интеграция между `vision/main.py`, `api/app.py` и C++ контроллером не реализована как единый runtime-контур.
 - `POST /command` принимает команду и возвращает подтверждение, но не передаёт её в исполнительный движок.
 - Расчёт дистанции зависит от `robot_size` и калибровки сцены; без калибровки значение в см условное.
-- В проекте нет lock-файла зависимостей (`requirements.txt`), окружение собирается вручную.
+- В проекте есть базовый список зависимостей в `requirements.txt`, но без зафиксированных версий пакетов.
