@@ -1,48 +1,98 @@
-# Gesture-Based Coffee Delivery System
+# cofee-bot — gesture-based coffee delivery prototype
 
-## Problem
-In a coworking environment, users may need a fast and frictionless way to request coffee without interacting with a mobile application, a terminal, or approaching the coffee machine. The solution must support a hands-free request method (via a predefined gesture), automatically initiate coffee preparation, dispatch a delivery robot to the user, and return the robot to its base after completion.
+Проект демонстрирует прототип системы «жест -> доставка кофе» с двумя реализациями:
 
-## Solution
-The proposed system consists of four core components operating as an integrated pipeline:
+- **Python vision/navigation контур**: захват видео, детекция цветовых маркеров, расчёт дистанции/угла до цели и визуализация.
+- **C++ control контур**: симуляция исполнительной части робота (движение по командам `forward/right/left/stop`).
 
-1. **Camera** — captures and streams video to the server  
-2. **Server** — performs gesture recognition, triggers coffee preparation, computes routes, and issues robot control commands  
-3. **Coffee Machine** — prepares/pours coffee upon receiving a server signal  
-4. **Robot** — executes delivery and return actions according to the server commands
+Текущий репозиторий — инженерный прототип для лабораторной/исследовательской фазы, а не production-система.
 
+## Состав системы
 
-## Technical systems complex
-This diagram provides a high-level view of the physical components and their connectivity.
+| Компонент | Реализация | Назначение |
+|---|---|---|
+| Vision + Navigation | `python/main.py`, `python/detectors.py` | CV-пайплайн по кадрам камеры и расчёт навигационных параметров |
+| API endpoint для команд | `python/server.py` | HTTP-вход для передачи команды (в текущем виде без очереди/диспетчера) |
+| Engine control prototype | `cpp/classes.h`, `cpp/engine_controll.cpp` | Симуляция реакции движка на текстовые команды |
+| Конфигурация CV | `python/config.py` | HSV-диапазоны, фильтрация масок, параметры визуализации |
 
-<img src="readme_imgs/KTS.jpg" alt="Hardware/Network Architecture (KTS)">
+## Быстрый запуск
 
-## Use-Case diagram
-This diagram outlines the supported functions for each component: Camera / Server / Coffee Machine / Robot.
+### Python vision loop
 
-<img src="readme_imgs/use-case-schema.png" alt="Use-Case Diagram">
+```bash
+cd python
+python3 -m venv .venv
+source .venv/bin/activate
+pip install opencv-python fastapi uvicorn numpy pydantic
+python main.py
+```
 
-## Diagram of precedent sequences
-The following steps represent the nominal operational workflow:
+Остановка окна OpenCV: клавиша `q`.
 
-1. Camera → Server: stream video  
-2. Server: recognize the predefined gesture  
-3. Server → Coffee Machine: send a “pour coffee” command  
-4. Server: compute a route to the user  
-5. Server → Robot: send a “start delivery” command  
-6. Robot: perform motion actions (move/turn)  
-7. Server: detect robot arrival  
-8. Server: compute a return route to the base  
-9. Server → Robot: send a “start return” command  
-10. Robot: perform motion actions (move/turn)
+### FastAPI endpoint
 
-<img src="readme_imgs/sequence-schema.png" alt="Sequence Diagram">
+```bash
+cd python
+source .venv/bin/activate
+python server.py
+```
 
-## Conceptual model
-This diagram captures the key entities and relationships: the camera streams video to the server; the server issues control commands to the robot and the coffee machine.
+URL: `http://localhost:8080/docs`.
 
-<img src="readme_imgs/concept-model.png" alt="Conceptual Model">
+### C++ control prototype
 
-## Class Diagram
+На текущем этапе `CMakeLists.txt` не соответствует фактической структуре файлов (ожидает `src/...`), поэтому для быстрого локального прогона используйте прямую сборку:
 
-<img src="readme_imgs/uml.png" alt="Class Diagram">
+```bash
+cd cpp
+g++ -std=c++11 engine_controll.cpp -o engine_controll
+./engine_controll
+```
+
+## Диаграммы
+
+### Технический комплекс
+
+Показывает физическую и сетевую топологию стенда: камера, сервер, кофемашина и робот, а также их каналы связи на уровне системы.
+
+![Технический комплекс](readme_imgs/KTS.jpg)
+
+### Use-case диаграмма
+
+Фиксирует функциональные сценарии по участникам системы: какие действия инициирует пользователь и какие сервисные функции выполняют сервер, камера, кофемашина и робот.
+
+![Use-case diagram](readme_imgs/use-case-schema.png)
+
+### Sequence диаграмма
+
+Отражает основной порядок выполнения операций во времени: от детекции жеста и старта приготовления кофе до доставки, фиксации прибытия и возврата робота на базу.
+
+![Sequence diagram](readme_imgs/sequence-schema.png)
+
+### Концептуальная модель
+
+Описывает ключевые сущности и их связи на уровне предметной области: поток видео в сервер и управляющие команды от сервера к исполнительным компонентам.
+
+![Concept model](readme_imgs/concept-model.png)
+
+### UML диаграмма классов
+
+Показывает структуру классов и ответственность модулей прототипа, включая обработку команд, навигационную логику и взаимодействие компонентов.
+
+![UML class diagram](readme_imgs/uml.png)
+
+## Документация
+
+- [docs/runbook.md](docs/runbook.md) — runbook запуска и диагностики
+- [docs/vision-navigation.md](docs/vision-navigation.md) — контракт CV/навигационного пайплайна
+- [docs/api.md](docs/api.md) — API-контракт `POST /command`
+- [docs/models.md](docs/models.md) — модели данных Python-части
+- [docs/engine-control.md](docs/engine-control.md) — C++ контур управления
+
+## Ограничения текущего состояния
+
+- Интеграция между `python/main.py`, `python/server.py` и C++ контроллером не реализована как единый runtime-контур.
+- `POST /command` принимает команду и возвращает подтверждение, но не передаёт её в исполнительный движок.
+- Расчёт дистанции зависит от `robot_size` и калибровки сцены; без калибровки значение в см условное.
+- В проекте нет lock-файла зависимостей (`requirements.txt`), окружение собирается вручную.
