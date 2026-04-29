@@ -40,8 +40,7 @@ python -c "import cv2, fastapi, uvicorn, numpy, pydantic; print('ok')"
 
 ```bash
 source .venv/bin/activate
-cd vision
-python main.py
+python -m vision.main
 ```
 
 Поведение:
@@ -62,8 +61,7 @@ python main.py
 
 ```bash
 source .venv/bin/activate
-cd api
-python server.py
+python -m api.server
 ```
 
 Проверка health через OpenAPI UI:

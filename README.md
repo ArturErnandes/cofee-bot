@@ -24,8 +24,7 @@
 python3 -m venv .venv
 source .venv/bin/activate
 pip install opencv-python fastapi uvicorn numpy pydantic
-cd vision
-python main.py
+python -m vision.main
 ```
 
 Остановка окна OpenCV: клавиша `q`.
@@ -34,8 +33,7 @@ python main.py
 
 ```bash
 source .venv/bin/activate
-cd api
-python server.py
+python -m api.server
 ```
 
 URL: `http://localhost:8080/docs`.

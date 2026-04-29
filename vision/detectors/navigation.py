@@ -1,6 +1,6 @@
 import numpy as np
 
-from models import Center, DetectedGeometry, NavigationData, Vector
+from vision.models import Center, DetectedGeometry, NavigationData, Vector
 
 
 class Navigator:

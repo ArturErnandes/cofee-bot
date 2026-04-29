@@ -1,6 +1,6 @@
 import cv2
 
-from models import Center, DetectedGeometry, DetectedObject, NavigationData
+from vision.models import Center, DetectedGeometry, DetectedObject, NavigationData
 
 
 class Visualizer:

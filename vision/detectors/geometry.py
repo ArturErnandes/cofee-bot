@@ -1,4 +1,4 @@
-from models import Center, DetectedGeometry, DetectedObject
+from vision.models import Center, DetectedGeometry, DetectedObject
 
 
 class ObjectsGeometry:

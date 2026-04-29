@@ -1,6 +1,6 @@
 import cv2
 
-from models import ColorMask, DetectedObject
+from vision.models import ColorMask, DetectedObject
 
 
 class ObjectsDetector:
