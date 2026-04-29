@@ -2,10 +2,10 @@
 
 Техническая спецификация Python-пайплайна обработки кадра и расчёта навигационных метрик.
 
-- Entry point: `python/main.py`
-- Core implementation: `python/detectors.py`
-- Runtime config: `python/config.py`
-- Data contracts: `python/classes.py`
+- Entry point: `vision/main.py`
+- Core implementation: `vision/detectors.py`
+- Runtime config: `vision/config.py`
+- Data contracts: `vision/models.py`
 
 ---
 
@@ -21,7 +21,7 @@
 
 ---
 
-## 2. Контракт конфигурации (`python/config.py`)
+## 2. Контракт конфигурации (`vision/config.py`)
 
 ### 2.1 Цветовые диапазоны
 

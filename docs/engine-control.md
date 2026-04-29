@@ -2,8 +2,8 @@
 
 Техническая спецификация C++ контура управления исполнительной частью.
 
-- Entry point: `cpp/engine_controll.cpp`
-- Реализация интерфейсов: `cpp/classes.h`
+- Entry point: `control/engine_controll.cpp`
+- Реализация интерфейсов: `control/classes.h`
 
 ---
 
@@ -58,17 +58,19 @@
 ### 4.1 Текущий рабочий путь
 
 ```bash
-cd cpp
+cd control
+cmake -S . -B build
+cmake --build build
+./build/engine_controll
+```
+
+### 4.2 Альтернативная сборка
+
+```bash
+cd control
 g++ -std=c++11 engine_controll.cpp -o engine_controll
 ./engine_controll
 ```
-
-### 4.2 Статус CMake
-
-`cpp/CMakeLists.txt` ожидает файлы в `src/`, но в репозитории они лежат в `cpp/`.
-
-Следствие:
-- стандартный CMake-конвейер в текущем виде не собирается.
 
 ---
 
@@ -76,7 +78,7 @@ g++ -std=c++11 engine_controll.cpp -o engine_controll
 
 1. Нет цикла постоянной обработки команд (`while`), только single-shot обработка.
 2. Нет обработки неизвестных команд и ошибок ввода.
-3. Нет связи с HTTP API `python/server.py`.
+3. Нет связи с HTTP API `api/server.py`.
 4. `FooEngine` — симуляция через `stdout`, без реального драйвера моторов.
 
 ---
@@ -85,5 +87,4 @@ g++ -std=c++11 engine_controll.cpp -o engine_controll
 
 1. Выделить протокол обмена командами между Python и C++ (HTTP/gRPC/queue/socket).
 2. Добавить очередь и ack-статус выполнения команд.
-3. Исправить `CMakeLists.txt` под фактическую структуру файлов.
-4. Добавить интеграционные тесты `command -> engine action`.
+3. Добавить интеграционные тесты `command -> engine action`.

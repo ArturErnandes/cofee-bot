@@ -2,7 +2,7 @@
 
 Техническая спецификация структур данных Python-модуля.
 
-- Источник: `python/classes.py`
+- Источники: `vision/models.py`, `api/models.py`
 
 ---
 

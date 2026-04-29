@@ -11,20 +11,20 @@
 
 | Компонент | Реализация | Назначение |
 |---|---|---|
-| Vision + Navigation | `python/main.py`, `python/detectors.py` | CV-пайплайн по кадрам камеры и расчёт навигационных параметров |
-| API endpoint для команд | `python/server.py` | HTTP-вход для передачи команды (в текущем виде без очереди/диспетчера) |
-| Engine control prototype | `cpp/classes.h`, `cpp/engine_controll.cpp` | Симуляция реакции движка на текстовые команды |
-| Конфигурация CV | `python/config.py` | HSV-диапазоны, фильтрация масок, параметры визуализации |
+| Vision + Navigation | `vision/main.py`, `vision/detectors.py` | CV-пайплайн по кадрам камеры и расчёт навигационных параметров |
+| API endpoint для команд | `api/server.py` | HTTP-вход для передачи команды (в текущем виде без очереди/диспетчера) |
+| Engine control prototype | `control/classes.h`, `control/engine_controll.cpp` | Симуляция реакции движка на текстовые команды |
+| Конфигурация CV | `vision/config.py` | HSV-диапазоны, фильтрация масок, параметры визуализации |
 
 ## Быстрый запуск
 
 ### Python vision loop
 
 ```bash
-cd python
 python3 -m venv .venv
 source .venv/bin/activate
 pip install opencv-python fastapi uvicorn numpy pydantic
+cd vision
 python main.py
 ```
 
@@ -33,8 +33,8 @@ python main.py
 ### FastAPI endpoint
 
 ```bash
-cd python
 source .venv/bin/activate
+cd api
 python server.py
 ```
 
@@ -42,10 +42,19 @@ URL: `http://localhost:8080/docs`.
 
 ### C++ control prototype
 
-На текущем этапе `CMakeLists.txt` не соответствует фактической структуре файлов (ожидает `src/...`), поэтому для быстрого локального прогона используйте прямую сборку:
+Можно запускать как через CMake, так и через прямую сборку:
 
 ```bash
-cd cpp
+cd control
+cmake -S . -B build
+cmake --build build
+./build/engine_controll
+```
+
+Или:
+
+```bash
+cd control
 g++ -std=c++11 engine_controll.cpp -o engine_controll
 ./engine_controll
 ```
@@ -92,7 +101,7 @@ g++ -std=c++11 engine_controll.cpp -o engine_controll
 
 ## Ограничения текущего состояния
 
-- Интеграция между `python/main.py`, `python/server.py` и C++ контроллером не реализована как единый runtime-контур.
+- Интеграция между `vision/main.py`, `api/server.py` и C++ контроллером не реализована как единый runtime-контур.
 - `POST /command` принимает команду и возвращает подтверждение, но не передаёт её в исполнительный движок.
 - Расчёт дистанции зависит от `robot_size` и калибровки сцены; без калибровки значение в см условное.
 - В проекте нет lock-файла зависимостей (`requirements.txt`), окружение собирается вручную.
