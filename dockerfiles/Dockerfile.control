@@ -1,0 +1,16 @@
+FROM debian:bookworm-slim AS build
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential cmake \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src/control
+COPY control/CMakeLists.txt control/classes.h control/engine_controll.cpp ./
+
+RUN cmake -S . -B build && cmake --build build
+
+FROM debian:bookworm-slim
+WORKDIR /app
+COPY --from=build /src/control/build/engine_controll /app/engine_controll
+
+CMD ["/app/engine_controll"]
