@@ -1,10 +1,10 @@
 # Command API
 
-Актуальная спецификация HTTP API модуля `python/server.py`.
+Актуальная спецификация HTTP API модуля `api/server.py`.
 
 - Framework: FastAPI
-- Entry point: `python/server.py`
-- Модель данных: `python/classes.py` (`Command`)
+- Entry point: `api/server.py`
+- Модель данных: `api/models.py` (`Command`)
 
 ---
 
